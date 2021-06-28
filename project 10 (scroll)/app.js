@@ -48,7 +48,6 @@ window.addEventListener("scroll" , function() {
 
     // setup back to top links
     if (scrollHeight > 500) {
-    console.log("helo");
 
     topLink.classList.add("show-link");
   } else {
@@ -58,7 +57,42 @@ window.addEventListener("scroll" , function() {
 
 
 // *********** smooth scroll ***************
+// select links
 
+const scrollLink = document.querySelectorAll(".scroll-link");
+
+scrollLink.forEach(function(link)  {
+    link.addEventListener('click' , function(e){
+        // prevent Default
+            e.preventDefault();
+        //navigate to speccific spot
+        const id = e.currentTarget.getAttribute("href").slice(1);
+        const element = document.getElementById(id);
+        // calculate the heights
+        const navHeight = navbar.getBoundingClientRect().height ;
+        const containerHeight = linksContainer.getBoundingClientRect().height;
+
+        const fixedNav = navbar.classList.contains("fixed-nav");
+        let position = element.offsetTop - navHeight;
+        
+
+        if(!fixedNav){
+            position = position - navHeight;
+        }
+        if(navHeight > 82){
+            position = position + containerHeight;         
+        }
+
+
+        window.scrollTo({
+            left:0,
+            top:position,
+
+        });
+        linksContainer.style.height = 0; 
+
+    });
+});
 
 
 
